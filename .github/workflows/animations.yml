@@ -1,0 +1,44 @@
+name: Generate Animations
+
+on:
+  schedule: # execute every 12 hours
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+jobs:
+  generate-both-animations:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate Snake Animation
+        uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            animations/snake.svg
+            animations/snake-dark.svg?palette=github-dark
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Pacman Animation
+        uses: abozanona/pacman-contribution-graph@main
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          output: animations/pacman.svg
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy Both Animations
+        uses: peaceiris/gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./animations
+          publish_branch: output
+          force_orphan: false
