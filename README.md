@@ -59,7 +59,7 @@
   <br />
   Check out my portfolio to see my work in action:
   <br />
-  🌐 <a href="https://appsbysagar.netlify.app/">Appsbysagar.netlify.app</a>
+  🌐 <a href="https://sagar.is-a-fullstack.dev">sagar.is-a-fullstack.dev</a>
 </p>
 
 <hr />
